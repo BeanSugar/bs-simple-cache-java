@@ -1,0 +1,26 @@
+### Intellij Files ###
+*.iml
+*.idea
+
+### Java Files ###
+*.class
+
+### Eclipse Files ###
+.project
+.settings
+.classpath
+
+### Lucene and etc..
+.lucene
+logs
+
+### mac System file
+.DS_Store
+
+### Package Files
+*.jar
+*.war
+*.ear
+
+### maven build source
+target
