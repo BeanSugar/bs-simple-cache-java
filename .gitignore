@@ -1,12 +1,26 @@
+### Intellij Files ###
+*.iml
+*.idea
+
+### Java Files ###
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+### Eclipse Files ###
+.project
+.settings
+.classpath
 
-# Package Files #
+### Lucene and etc..
+.lucene
+logs
+
+### mac System file
+.DS_Store
+
+### Package Files
 *.jar
 *.war
 *.ear
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+### maven build source
+target
