@@ -2,23 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.beansugar.tools</groupId>
-	<artifactId>bs-tools-java</artifactId>
-	<!--<name>bs-tools-java</name>-->
+	<groupId>org.scriptonbasestar.cache</groupId>
+	<artifactId>sb-simple-cache</artifactId>
 
 	<modules>
-		<module>bs-tools-collection</module>
-		<module>bs-tools-common</module>
-		<module>bs-tools-core</module>
-
-		<module>bs-tools-data</module>
-		<module>bs-tools-logging</module>
-		<module>bs-tools-http-client</module>
-		<module>bs-tools-http-core</module>
-		<module>bs-tools-http-server</module>
-		<module>bs-tools-threading</module>
-		<module>bs-tools-taglibs</module>
-		<module>bs-tools-test</module>
+		<module>cache-collection</module>
+		<module>cache-core</module>
+		<module>cache-loader-inmemory</module>
+		<module>cache-loader-redis</module>
 	</modules>
 	<packaging>pom</packaging>
 	<version>tools-A10-4-BUILD-SNAPSHOT</version>
@@ -27,7 +18,6 @@
 		<java-version>1.7</java-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
 
 		<org.springframework-version>4.2.1.RELEASE</org.springframework-version>
 		<org.springframework.security-version>4.0.2.RELEASE</org.springframework.security-version>
@@ -197,51 +187,16 @@
 	<dependencyManagement>
 
 		<dependencies>
-			<!-- beansugar -->
+			<!-- scriptonbasestar -->
 			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-taglibs</artifactId>
-				<version>${project.parent.version}</version>
+				<groupId>org.scriptonbasestar.cache</groupId>
+				<artifactId>cache-collection</artifactId>
+				<version>${project.version</version>
 			</dependency>
 			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-core</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-threading</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-collection</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-logging</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-http-client</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-data</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-http-core</artifactId>
-				<version>${project.parent.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.beansugar.tools</groupId>
-				<artifactId>bs-tools-http-server</artifactId>
-				<version>${project.parent.version}</version>
+				<groupId>org.scriptonbasestar.cache</groupId>
+				<artifactId>cache-core</artifactId>
+				<version>${project.version</version>
 			</dependency>
 
 			<!-- spring -->
