@@ -1,10 +1,39 @@
 package org.scriptonbasestar.cache.collection.list;
 
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author archmagece
  * @with sb-simple-cache
  * @since 2016-11-06
- *
  */
-public class SBCacheList {
+public class SBCacheList<E> extends ArrayList<E> {
+
+	private DateTime updatedAt = DateTime.now();
+	//	private ExecutorService executor = Executors.newFixedThreadPool(1);
+	private final SBCacheListLoader<E> loader;
+
+	public SBCacheList(SBCacheListLoader<E> loader) {
+		super(Collections.synchronizedList(new ArrayList()));
+		this.loader = loader;
+	}
+
+	public SBCacheList(List<? extends E> collection, SBCacheListLoader<E> loader) {
+		super(Collections.synchronizedList(collection));
+		this.loader = loader;
+	}
+
+	@Override
+	public E get(int index) {
+		if (updatedAt.plusMinutes(30).isBeforeNow()) {
+			updatedAt.plusMinutes(30);
+//			loader.load(index);
+			loader.loadAll();
+		}
+		return super.get(index);
+	}
 }
