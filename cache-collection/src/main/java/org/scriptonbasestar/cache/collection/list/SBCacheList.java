@@ -20,11 +20,13 @@ public class SBCacheList<E> extends ArrayList<E> {
 	public SBCacheList(SBCacheListLoader<E> loader) {
 		super(Collections.synchronizedList(new ArrayList()));
 		this.loader = loader;
+		super.addAll(this.loader.loadAll());
 	}
 
 	public SBCacheList(List<? extends E> collection, SBCacheListLoader<E> loader) {
 		super(Collections.synchronizedList(collection));
 		this.loader = loader;
+		super.addAll(this.loader.loadAll());
 	}
 
 	@Override
@@ -32,7 +34,7 @@ public class SBCacheList<E> extends ArrayList<E> {
 		if (updatedAt.plusMinutes(30).isBeforeNow()) {
 			updatedAt.plusMinutes(30);
 //			loader.load(index);
-			loader.loadAll();
+			super.addAll(loader.loadAll());
 		}
 		return super.get(index);
 	}
