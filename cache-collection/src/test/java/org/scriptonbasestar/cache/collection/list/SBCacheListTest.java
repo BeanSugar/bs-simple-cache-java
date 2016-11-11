@@ -13,7 +13,7 @@ public class SBCacheListTest {
 
 	@Test
 	public void test(){
-		SBCacheList<String> cacheList = new SBCacheList<>(new SBCacheListLoader<String>(){
+		SBCacheSimpleList<String> cacheList = new SBCacheSimpleList<>(new SBCacheListLoader<String>(){
 			@Override
 			public String load(int index) throws SBCacheLoadFailException {
 				return ListDataFeed.getData(index);
