@@ -11,19 +11,19 @@ import java.util.List;
  * @with sb-simple-cache
  * @since 2016-11-06
  */
-public class SBCacheSimpleList<E> extends ArrayList<E> {
+public class SBCacheList<E> extends ArrayList<E> {
 
 	private DateTime updatedAt = DateTime.now();
 	//	private ExecutorService executor = Executors.newFixedThreadPool(1);
 	private final SBCacheListLoader<E> loader;
 
-	public SBCacheSimpleList(SBCacheListLoader<E> loader) {
+	public SBCacheList(SBCacheListLoader<E> loader) {
 		super(Collections.synchronizedList(new ArrayList()));
 		this.loader = loader;
 		super.addAll(this.loader.loadAll());
 	}
 
-	public SBCacheSimpleList(List<? extends E> collection, SBCacheListLoader<E> loader) {
+	public SBCacheList(List<? extends E> collection, SBCacheListLoader<E> loader) {
 		super(Collections.synchronizedList(collection));
 		this.loader = loader;
 		super.addAll(this.loader.loadAll());
