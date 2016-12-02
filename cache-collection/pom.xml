@@ -3,8 +3,8 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-		<artifactId>sb-simple-cache</artifactId>
 		<groupId>org.scriptonbasestar.cache</groupId>
+		<artifactId>sb-simple-cache-java</artifactId>
 		<version>tools-A10-4-BUILD-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -13,16 +13,14 @@
 
 	<dependencies>
 		<!-- this project -->
-
+		<dependency>
+			<groupId>org.scriptonbasestar.cache</groupId>
+			<artifactId>cache-core</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>joda-time</groupId>
 			<artifactId>joda-time</artifactId>
-			<version>${joda-time-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.scriptonbasestar.cache</groupId>
-			<artifactId>cache-core</artifactId>
 		</dependency>
 	</dependencies>
 </project>

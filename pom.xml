@@ -19,85 +19,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<org.springframework-version>4.2.1.RELEASE</org.springframework-version>
-		<org.springframework.security-version>4.0.2.RELEASE</org.springframework.security-version>
-		<org.springframework.amqp-version>1.4.5.RELEASE</org.springframework.amqp-version>
-		<org.springframework.data-version>1.4.1.RELEASE</org.springframework.data-version>
-		<org.springframework.data-spring-data-rest-webmvc-version>2.4.0.RELEASE</org.springframework.data-spring-data-rest-webmvc-version>
-		<org.springframework.data-spring-data-neo4j-version>4.0.0.RELEASE</org.springframework.data-spring-data-neo4j-version>
-		<org.springframework.data-spring-data-commons-version>1.11.1.RELEASE</org.springframework.data-spring-data-commons-version>
-		<org.springframework.data-spring-data-jpa-version>1.9.1.RELEASE</org.springframework.data-spring-data-jpa-version>
-		<org.springframework.data-spring-data-jdbc-core-version>1.1.0.RELEASE</org.springframework.data-spring-data-jdbc-core-version>
-		<org.springframework.data-spring-data-mongodb-version>1.8.1.RELEASE</org.springframework.data-spring-data-mongodb-version>
-
-		<org.apache.httpcomponents-version>4.4</org.apache.httpcomponents-version>
-
-		<org.hibernate.javax.persistence-version>1.0.0.Final</org.hibernate.javax.persistence-version>
-
-		<org.hibernate-version>4.3.10.Final</org.hibernate-version>
-		<org.hibernate-hibernate-validator-version>5.1.3.Final</org.hibernate-hibernate-validator-version>
-		<org.hibernate.ogm-version>4.2.0.Final</org.hibernate.ogm-version>
-
-		<joda-time-version>2.8.2</joda-time-version>
-		<org.jadira.usertype-version>3.2.0.GA</org.jadira.usertype-version>
-
-		<javax.validation-version>1.1.0.Final</javax.validation-version>
-
-		<org.aspectj-version>1.8.6</org.aspectj-version>
-		<org.slf4j-version>1.7.7</org.slf4j-version>
-
-		<mysql-version>5.1.35</mysql-version>
-
-		<junit-version>4.12</junit-version>
-		<ch.qos.logback-version>1.1.3</ch.qos.logback-version>
-		<com.google.code.gson-version>2.2.2</com.google.code.gson-version>
-
-		<com.mysema.querydsl-version>3.6.3</com.mysema.querydsl-version>
-		<org.projectlombok-version>1.16.6</org.projectlombok-version>
-		<org.codehaus.groovy-version>2.3.6</org.codehaus.groovy-version>
-		<org.codehaus.gmaven.runtime-version>1.5</org.codehaus.gmaven.runtime-version>
-
-		<org.jsoup-version>1.8.2</org.jsoup-version>
-		<org.json-version>20141113</org.json-version>
-		<com.thoughtworks.xstream-version>1.4.8</com.thoughtworks.xstream-version>
-		<org.msgpack-version>0.6.12</org.msgpack-version>
-
-		<javax.mail-version>1.4</javax.mail-version>
-
-		<javax.servlet-version>3.1.0</javax.servlet-version>
-		<javax.servlet.jsp-jsp-api-version>2.2</javax.servlet.jsp-jsp-api-version>
-
-		<javax.transaction-version>1.1</javax.transaction-version>
-
-		<com.google.guava-version>18.0</com.google.guava-version>
-		<org.mongodb-version>3.0.2</org.mongodb-version>
-
-		<commons-codec-version>1.4</commons-codec-version>
-		<commons-net-version>3.3</commons-net-version>
-		<commons-lang-version>2.6</commons-lang-version>
-		<commons-dbcp-version>1.4</commons-dbcp-version>
-
-		<org.apache.commons-version>2.4.2</org.apache.commons-version>
+		<org.slf4j-version>1.7.21</org.slf4j-version>
+		<ch.qos.logback-version>1.1.7</ch.qos.logback-version>
 	</properties>
 
-	<distributionManagement>
-		<repository>
-			<id>msync-snapshot</id>
-			<url>http://repo.m-sync.co.kr/repository/msync-snapshot</url>
-		</repository>
-		<!--<repository>-->
-			<!--<id>beansugar-snapshot</id>-->
-			<!--<url>http://nexus.beansugar.org/content/repositories/beansugar-snapshot</url>-->
-		<!--</repository>-->
-	</distributionManagement>
-
 	<dependencies>
-		<!-- spring,test -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<!-- junit,test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -144,43 +70,6 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.2.1</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-				<executions>
-					<execution>
-						<goals>
-							<!--<goal>jar</goal>-->
-							<goal>test-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.12.4</version>
-				<configuration>
-					<skipTests>true</skipTests>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -191,312 +80,92 @@
 			<dependency>
 				<groupId>org.scriptonbasestar.cache</groupId>
 				<artifactId>cache-collection</artifactId>
-				<version>${project.version</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.scriptonbasestar.cache</groupId>
 				<artifactId>cache-core</artifactId>
-				<version>${project.version</version>
+				<version>${project.version}</version>
 			</dependency>
 
-			<!-- spring -->
-			<!--<dependency>-->
-				<!--<groupId>org.springframework</groupId>-->
-				<!--<artifactId>spring-core</artifactId>-->
-				<!--<version>${org.springframework-version}</version>-->
-			<!--</dependency>-->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-			<!--<dependency>-->
-				<!--<groupId>org.springframework</groupId>-->
-				<!--<artifactId>spring-context-support</artifactId>-->
-				<!--<version>${org.springframework-version}</version>-->
-			<!--</dependency>-->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-web</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-expression</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-tx</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aop</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-
+			<!-- Lombok -->
 			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
-				<version>${org.projectlombok-version}</version>
+				<version>1.16.10</version>
 			</dependency>
 
-			<!-- spring,test -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${org.springframework-version}</version>
-			</dependency>
-
-			<!-- spring,rabbit -->
-			<dependency>
-				<groupId>org.springframework.amqp</groupId>
-				<artifactId>spring-rabbit</artifactId>
-				<version>${org.springframework.amqp-version}</version>
-			</dependency>
-
-
-			<!-- spring,data,jpa -->
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-commons</artifactId>
-				<version>${org.springframework.data-spring-data-commons-version}</version>
-			</dependency>
-
-			<!-- spring,data,jpa -->
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-jpa</artifactId>
-				<version>${org.springframework.data-spring-data-jpa-version}</version>
-			</dependency>
-			<!-- spring,data -->
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-jdbc-core</artifactId>
-				<version>${org.springframework.data-spring-data-jdbc-core-version}</version>
-			</dependency>
-			<!-- spring,data,jpa,mongo -->
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-mongodb</artifactId>
-				<version>${org.springframework.data-spring-data-mongodb-version}</version>
-			</dependency>
-			<!-- spring,data,jpa,neo4j -->
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-neo4j</artifactId>
-				<version>${org.springframework.data-spring-data-neo4j-version}</version>
-			</dependency>
-
-			<!-- jpa -->
-			<dependency>
-				<groupId>org.hibernate.javax.persistence</groupId>
-				<artifactId>hibernate-jpa-2.1-api</artifactId>
-				<version>${org.hibernate.javax.persistence-version}</version>
-			</dependency>
-
-			<!-- hibernate -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-core</artifactId>
-				<version>${org.hibernate-version}</version>
-			</dependency>
-			<!-- hibernate -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-entitymanager</artifactId>
-				<version>${org.hibernate-version}</version>
-			</dependency>
-			<!-- hibernate,cache -->
-			<dependency>
-				<groupId>org.hibernate</groupId>
-				<artifactId>hibernate-ehcache</artifactId>
-				<version>${org.hibernate-version}</version>
-			</dependency>
-			<!-- datetime,hibernate -->
-			<dependency>
-				<groupId>org.jadira.usertype</groupId>
-				<artifactId>usertype.core</artifactId>
-				<version>${org.jadira.usertype-version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.validation</groupId>
-				<artifactId>validation-api</artifactId>
-				<version>${javax.validation-version}</version>
-			</dependency>
 			<!-- hibernate,validation -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>${org.hibernate-hibernate-validator-version}</version>
+				<version>5.3.3.Final</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-validator-cdi</artifactId>
-				<version>${org.hibernate-hibernate-validator-version}</version>
+				<version>5.3.3.Final</version>
 			</dependency>
 
-			<!-- ogm -->
-			<dependency>
-				<groupId>org.hibernate.ogm</groupId>
-				<artifactId>hibernate-ogm-mongodb</artifactId>
-				<version>${org.hibernate.ogm-version}</version>
-			</dependency>
-
-			<!-- mysql -->
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql-version}</version>
-			</dependency>
-
-			<!-- Commons -->
-			<dependency>
-				<groupId>commons-dbcp</groupId>
-				<artifactId>commons-dbcp</artifactId>
-				<version>${commons-dbcp-version}</version>
-			</dependency>
 
 			<!-- junit,test -->
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<version>${junit-version}</version>
+				<version>4.12</version>
 			</dependency>
 
 			<!-- GSON -->
 			<dependency>
 				<groupId>com.google.code.gson</groupId>
 				<artifactId>gson</artifactId>
-				<version>${com.google.code.gson-version}</version>
+				<version>2.8.0</version>
 			</dependency>
 
 			<!--json,jsoup  -->
 			<dependency>
 				<groupId>org.jsoup</groupId>
 				<artifactId>jsoup</artifactId>
-				<version>${org.jsoup-version}</version>
+				<version>1.10.1</version>
 			</dependency>
 
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
-				<version>${commons-lang-version}</version>
+				<version>2.6</version>
 			</dependency>
 
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
-				<version>${commons-codec-version}</version>
+				<version>1.10</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-net</groupId>
 				<artifactId>commons-net</artifactId>
-				<version>${commons-net-version}</version>
+				<version>3.5</version>
 			</dependency>
 
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
-				<version>${joda-time-version}</version>
+				<version>2.9.6</version>
 			</dependency>
 
-			<dependency>
-				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>xstream</artifactId>
-				<version>${com.thoughtworks.xstream-version}</version>
-			</dependency>
-
-			<!-- javax,servlet,api -->
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${javax.servlet-version}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<!-- jsp,api,javax -->
-			<dependency>
-				<groupId>javax.servlet.jsp</groupId>
-				<artifactId>jsp-api</artifactId>
-				<version>${javax.servlet.jsp-jsp-api-version}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<!-- msgpack -->
-			<dependency>
-				<groupId>org.msgpack</groupId>
-				<artifactId>msgpack</artifactId>
-				<version>${org.msgpack-version}</version>
-			</dependency>
-
-			<!-- javax,jta,jsr -->
-			<dependency>
-				<groupId>javax.transaction</groupId>
-				<artifactId>jta</artifactId>
-				<version>${javax.transaction-version}</version>
-			</dependency>
-			<!-- /jta -->
 
 			<!-- Guava -->
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
-				<version>${com.google.guava-version}</version>
+				<version>20.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava-testlib</artifactId>
-				<version>${com.google.guava-version}</version>
+				<version>20.0</version>
 				<scope>test</scope>
 			</dependency>
 
-			<!-- 몽고 DB 관련 -->
-			<dependency>
-				<groupId>org.mongodb</groupId>
-				<artifactId>mongo-java-driver</artifactId>
-				<version>${org.mongodb-version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpclient</artifactId>
-				<version>${org.apache.httpcomponents-version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpcore</artifactId>
-				<version>${org.apache.httpcomponents-version}</version>
-			</dependency>
-
-			<!-- java mail-->
-			<dependency>
-				<groupId>javax.mail</groupId>
-				<artifactId>mail</artifactId>
-				<version>${javax.mail-version}</version>
-			</dependency>
 
 			<!-- Logging -->
 			<dependency>
