@@ -9,7 +9,7 @@
 		<module>cache-collection</module>
 		<module>cache-core</module>
 		<module>cache-loader-inmemory</module>
-		<module>cache-loader-redis</module>
+		<!--<module>cache-loader-redis</module>-->
 	</modules>
 	<packaging>pom</packaging>
 	<version>tools-A10-4-BUILD-SNAPSHOT</version>

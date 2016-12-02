@@ -14,8 +14,11 @@ import java.util.concurrent.Executors;
  * @since 2015-08-26 11
  *
  * 들만들어짐
+ *
+ * ConcurrentMap 참고.
+ *
  */
-public class BSAsyncCacheMap<K, V> {
+public class SBAsyncCacheMap<K, V> {
 
 	//last used
 	private Map<K, DateTime> timeCheckerExpire = new HashMap<>();
@@ -38,7 +41,7 @@ public class BSAsyncCacheMap<K, V> {
 	private final int NUMBER_OF_THREAD = 5;
 	private ExecutorService executor;
 
-	public BSAsyncCacheMap(SBCacheMapLoader cacheLoader, int timeoutSec) {
+	public SBAsyncCacheMap(SBCacheMapLoader cacheLoader, int timeoutSec) {
 		this.cacheLoader = cacheLoader;
 		this.timeoutSec = timeoutSec;
 		this.addTimeOutSec = timeoutSec;
@@ -89,7 +92,7 @@ public class BSAsyncCacheMap<K, V> {
 		public void run() {
 			try {
 				put(key, cacheLoader.loadOne(key));
-//				data.put(k, cacheLoader.load(k));
+//				data.put(k, cacheLoader.loadOne(k));
 			} catch (Exception e) {
 				if(allowExpiredData){
 					synchronized (syncObj1){
