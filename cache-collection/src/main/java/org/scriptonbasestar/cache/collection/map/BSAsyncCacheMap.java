@@ -89,7 +89,7 @@ public class BSAsyncCacheMap<K, V> {
 		public void run() {
 			try {
 				put(key, cacheLoader.loadOne(key));
-//				data.put(k, cacheLoader.load(k));
+//				data.put(k, cacheLoader.loadOne(k));
 			} catch (Exception e) {
 				if(allowExpiredData){
 					synchronized (syncObj1){

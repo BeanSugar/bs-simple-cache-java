@@ -11,6 +11,6 @@ import java.util.List;
  *
  */
 public interface SBCacheListLoader<E> {
-	E load(int index) throws SBCacheLoadFailException;
+	E loadOne(int index) throws SBCacheLoadFailException;
 	List<E> loadAll() throws SBCacheLoadFailException;
 }

@@ -1,6 +1,7 @@
 package org.scriptonbasestar.cache.collection.list;
 
 import org.junit.Test;
+import org.scriptonbasestar.cache.collection.stratege.LoadStrategy;
 import org.scriptonbasestar.cache.core.exception.SBCacheLoadFailException;
 
 import java.util.List;
@@ -16,26 +17,26 @@ public class SBCacheListTest {
 		final ListDataFeed dataFeed = new ListDataFeed();
 
 		System.out.println(dataFeed.load(0));
-		System.out.println(dataFeed.loadAll());
+//		System.out.println(dataFeed.loadAll());
 		System.out.println(dataFeed.load(0));
-		System.out.println(dataFeed.loadAll());
+//		System.out.println(dataFeed.loadAll());
 		System.out.println(dataFeed.load(0));
-		System.out.println(dataFeed.loadAll());
+//		System.out.println(dataFeed.loadAll());
 	}
 
 	@Test
 	public void testLoadCache(){
 		final ListDataFeed dataFeed = new ListDataFeed();
-		SBCacheSimpleList<String> cacheList = new SBCacheSimpleList<>(new SBCacheListLoader<String>(){
+		SBCacheList<String> cacheList = new SBCacheList<>(new SBCacheListLoader<String>(){
 			@Override
-			public String load(int index) throws SBCacheLoadFailException {
+			public String loadOne(int index) throws SBCacheLoadFailException {
 				return dataFeed.load(index);
 			}
 			@Override
 			public List<String> loadAll() throws SBCacheLoadFailException {
 				return dataFeed.loadAll();
 			}
-		});
+		}, LoadStrategy.ALL);
 
 		System.out.println(cacheList.get(0));
 		System.out.println(cacheList);
