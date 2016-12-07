@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
  *
  * 들만들어짐
  */
-public class BSAsyncCacheMap<K, V> {
+public class SBAsyncCacheMap<K, V> {
 
 	//last used
 	private Map<K, DateTime> timeCheckerExpire = new HashMap<>();
@@ -38,7 +38,7 @@ public class BSAsyncCacheMap<K, V> {
 	private final int NUMBER_OF_THREAD = 5;
 	private ExecutorService executor;
 
-	public BSAsyncCacheMap(SBCacheMapLoader cacheLoader, int timeoutSec) {
+	public SBAsyncCacheMap(SBCacheMapLoader cacheLoader, int timeoutSec) {
 		this.cacheLoader = cacheLoader;
 		this.timeoutSec = timeoutSec;
 		this.addTimeOutSec = timeoutSec;
