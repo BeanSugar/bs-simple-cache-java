@@ -1,4 +1,4 @@
-package org.scriptonbasestar.cache.collection.map;
+package org.beansugar.cache.collection.map;
 
 import lombok.extern.slf4j.Slf4j;
 

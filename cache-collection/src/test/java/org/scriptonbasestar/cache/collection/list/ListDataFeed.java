@@ -1,8 +1,8 @@
-package org.scriptonbasestar.cache.collection.list;
+package org.beansugar.cache.collection.list;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.scriptonbasestar.cache.core.exception.SBCacheLoadFailException;
+import org.beansugar.cache.core.exception.BSCacheLoadFailException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
  * @since 2016-11-07
  */
 @Slf4j
-public class ListDataFeed implements SBCacheListDAO<String> {
+public class ListDataFeed implements BSCacheListDAO<String> {
 	private static final List<String> dataList = new ArrayList<>();
 
 	static {
@@ -23,7 +23,7 @@ public class ListDataFeed implements SBCacheListDAO<String> {
 	}
 
 	@Override
-	public String load(int index) throws SBCacheLoadFailException {
+	public String load(int index) throws BSCacheLoadFailException {
 		try {
 			log.debug("loadOne thread sleep 3000");
 			Thread.sleep(3000);
@@ -34,7 +34,7 @@ public class ListDataFeed implements SBCacheListDAO<String> {
 	}
 
 	@Override
-	public List loadAll() throws SBCacheLoadFailException {
+	public List loadAll() throws BSCacheLoadFailException {
 		try {
 			log.debug("loadAll thread sleep 3000");
 			Thread.sleep(3000);
