@@ -1,8 +1,8 @@
-package org.scriptonbasestar.cache.collection.list;
+package org.beansugar.cache.collection.list;
 
 import org.junit.Test;
-import org.scriptonbasestar.cache.collection.stratege.LoadStrategy;
-import org.scriptonbasestar.cache.core.exception.SBCacheLoadFailException;
+import org.beansugar.cache.collection.stratege.LoadStrategy;
+import org.beansugar.cache.core.exception.BSCacheLoadFailException;
 
 import java.util.List;
 
@@ -27,13 +27,13 @@ public class SBCacheListTest {
 	@Test
 	public void testLoadCache(){
 		final ListDataFeed dataFeed = new ListDataFeed();
-		SBCacheList<String> cacheList = new SBCacheList<>(new SBCacheListLoader<String>(){
+		BSCacheList<String> cacheList = new BSCacheList<>(new BSCacheListLoader<String>(){
 			@Override
-			public String loadOne(int index) throws SBCacheLoadFailException {
+			public String loadOne(int index) throws BSCacheLoadFailException {
 				return dataFeed.load(index);
 			}
 			@Override
-			public List<String> loadAll() throws SBCacheLoadFailException {
+			public List<String> loadAll() throws BSCacheLoadFailException {
 				return dataFeed.loadAll();
 			}
 		}, LoadStrategy.ALL);

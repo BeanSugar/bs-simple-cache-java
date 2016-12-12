@@ -3,9 +3,9 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<parent>
-		<groupId>org.scriptonbasestar.cache</groupId>
-		<artifactId>sb-simple-cache-java</artifactId>
-		<version>tools-A10-4-BUILD-SNAPSHOT</version>
+		<groupId>org.beansugar.cache</groupId>
+		<artifactId>bs-simple-cache-java</artifactId>
+		<version>bs-cache-201612-1-BUILD-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +14,7 @@
 	<dependencies>
 		<!-- this project -->
 		<dependency>
-			<groupId>org.scriptonbasestar.cache</groupId>
+			<groupId>org.beansugar.cache</groupId>
 			<artifactId>cache-core</artifactId>
 		</dependency>
 
