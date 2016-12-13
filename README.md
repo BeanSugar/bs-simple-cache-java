@@ -11,3 +11,5 @@ loadOne : sync/async - 새 데이터를 조회할 때 기다릴지 이전걸 가
 refresh : one/all - 한개씩 가져올지 전체 다 가져올지
 
 
+https://hazelcast.org/ 이거참고 또는 이용
+

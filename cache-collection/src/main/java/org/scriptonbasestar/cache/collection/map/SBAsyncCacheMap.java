@@ -14,6 +14,9 @@ import java.util.concurrent.Executors;
  * @since 2015-08-26 11
  *
  * 들만들어짐
+ *
+ * ConcurrentMap 참고.
+ *
  */
 public class SBAsyncCacheMap<K, V> {
 
