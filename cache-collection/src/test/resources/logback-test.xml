@@ -31,7 +31,7 @@
 		</encoder>
 	</appender>
 	<!-- 파일생성 end -->
-	<logger name="org.scriptonbasestar.cache" level="DEBUG"/>
+	<logger name="org.beansugar.cache" level="DEBUG"/>
 	<root level="INFO"><!-- TRACE, DEBUG, INFO, WARN, ERROR -->
 		<appender-ref ref="console"/>
 	</root>

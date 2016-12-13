@@ -1,4 +1,4 @@
-package org.scriptonbasestar.cache.collection.map;
+package org.beansugar.cache.collection.map;
 
 /**
  * @author archmagece

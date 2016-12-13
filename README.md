@@ -1,4 +1,4 @@
-# sb-simple-cache-java
+# bs-simple-cache-java
 
 
 캐싱전략 1. 데이터 호출시 일정시간체크
