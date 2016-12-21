@@ -2,6 +2,7 @@ package org.beansugar.cache.collection.map;
 
 import lombok.extern.slf4j.Slf4j;
 import org.beansugar.cache.core.exception.BSCacheLoadFailException;
+import org.beansugar.cache.core.util.TimeCheckerUtil;
 import org.joda.time.DateTime;
 
 import java.util.Collections;
@@ -39,16 +40,16 @@ import java.util.concurrent.Executors;
  * 	TODO forced timeout 기능이 있어야함. 자주 조회하더라도 일정시간 지나면 무조건 폐기할 필요 있음.
  */
 @Slf4j
-public class BSCacheMap<K, V> extends HashMap<K,V> {
+public class BSCacheMap<K, V> {
 
-	private static final Object syncObject = new Object();
 	private Map<K, Long> timeoutChecker;
+	private Map<K, V> data;
 	private final int timeoutSec;
 	private final BSCacheMapLoader<K, V> cacheLoader;
-	private ExecutorService executor = Executors.newFixedThreadPool(1);
 
-	public BSCacheMap(BSCacheMapLoader cacheLoader, int timeoutSec) {
+	public BSCacheMap(BSCacheMapLoader<K,V> cacheLoader, int timeoutSec) {
 		super();
+		data = Collections.synchronizedMap(new HashMap<K, V>());
 		timeoutChecker = Collections.synchronizedMap(new HashMap<K, Long>());
 		this.cacheLoader = cacheLoader;
 		this.timeoutSec = timeoutSec;
@@ -57,43 +58,41 @@ public class BSCacheMap<K, V> extends HashMap<K,V> {
 	//DateTime이 자동생성되는거 없애줄 필요.
 	private Random random = new Random(DateTime.now().getMillis());
 
-	@Override
-	public V get(final Object key) {
-		log.trace("get data");
-		if (super.containsKey(key) && super.containsKey(key)
-				&& DateTime.now().minusSeconds(timeoutSec).isAfter(timeoutChecker.get(key))){
-			executor.execute(new Runnable() {
-				@Override
-				public void run() {
-					put((K) key, cacheLoader.loadOne((K)key));
-				}
-			});
+	public V get(final K key) {
+		log.trace("get data - key : {}", key);
+
+		if (data.containsKey(key) && timeoutChecker.containsKey(key) && TimeCheckerUtil.checkExpired(timeoutChecker.get(key), timeoutSec)){
+//			executor.execute(new Runnable() {
+//				@Override
+//				public void run() {
+//					put(key, cacheLoader.loadOne(key));
+//				}
+//			});
+			return data.get(key);
 		}else{
 			try{
-				put((K) key, cacheLoader.loadOne((K)key));
+				put(key, cacheLoader.loadOne(key));
+				return data.get(key);
 			}catch (BSCacheLoadFailException e){
-				super.remove(key);
+				data.remove(key);
 				timeoutChecker.remove(key);
 				throw e;
 			}
 		}
-		return super.get(key);
 	}
 
-	@Override
 	public V put(K key, V value) {
-		log.trace("put data");
+		log.trace("put data - key : {} , value : {}", key, value);
 		timeoutChecker.put(key, DateTime.now().plusSeconds(Math.abs(random.nextInt() % timeoutSec)).getMillis());
-		return super.put(key, value);
+		return data.put(key, value);
 	}
 
-	@Override
 	public void putAll(Map<? extends K, ? extends V> m) {
 		log.trace("putAll data");
 		for (K k : m.keySet()) {
 			timeoutChecker.put(k, DateTime.now().plusSeconds(timeoutSec).getMillis());
 		}
-		super.putAll(m);
+		data.putAll(m);
 	}
 
 	public void postponeOne(K k) {
@@ -121,32 +120,33 @@ public class BSCacheMap<K, V> extends HashMap<K,V> {
 		}
 	}
 
-	@Override
 	public V remove(Object key) {
 		timeoutChecker.remove(key);
-		return super.remove(key);
+		return data.remove(key);
 	}
 
 	public void removeAll() {
 		timeoutChecker.clear();
-		super.clear();
+		data.clear();
 	}
 
 	/**
 	 * 강제로 모든데이터 교체
 	 */
-	public synchronized void loadAll() {
+	public void loadAll() {
 		try {
-			synchronized (syncObject){
-				Map<K,V> cacheTmp = cacheLoader.loadAll();
-				super.clear();
-				super.putAll(cacheTmp);
+			Map<K,V> cacheTmp = cacheLoader.loadAll();
+			synchronized (data){
+				data.clear();
+				data.putAll(cacheTmp);
 				postponeAll();
 			}
 		} catch (BSCacheLoadFailException e) {
 //			throw e;
 //			e.printStackTrace();
-			log.trace(e.toString());
+			if (log.isTraceEnabled()) {
+				log.trace(e.toString());
+			}
 			return;
 		}
 	}

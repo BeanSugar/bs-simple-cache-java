@@ -20,32 +20,22 @@ import java.util.concurrent.Executors;
  */
 public class BSAsyncCacheMap<K, V> {
 
-	//last used
-	private Map<K, DateTime> timeCheckerExpire = new HashMap<>();
-	//first put
-	private Map<K, DateTime> timeCheckerFirstPut = new HashMap<>();
+	private Map<K, Long> timeCheckerExpire = new HashMap<>();
 	private Map<K, V> data = new HashMap<>();
-
-	/**
-	 * cacheLoader 호출실패시 구 데이터를 보존할지 보존할 경우 캐시타임을 일정시간 추가해줌. 추가되는 시간.
-	 */
-	private boolean allowExpiredData;
-	private int addTimeOutSec;
-	//사이즈 제한 필요. 선입선출
-//	private K[] queue;
-
-	private final BSCacheMapLoader<K, V> cacheLoader;
 	private final int timeoutSec;
-
+	private final BSCacheMapLoader<K, V> cacheLoader;
+	private ExecutorService executor;
 	//async
 	private final int NUMBER_OF_THREAD = 5;
-	private ExecutorService executor;
+
+	//if fail throw exception?? or use old data
+	private boolean isDataDurable;
+
 
 	public BSAsyncCacheMap(BSCacheMapLoader cacheLoader, int timeoutSec) {
 		this.cacheLoader = cacheLoader;
 		this.timeoutSec = timeoutSec;
-		this.addTimeOutSec = timeoutSec;
-		this.allowExpiredData = false;
+		this.isDataDurable = false;
 		//async
 		this.executor = Executors.newFixedThreadPool(NUMBER_OF_THREAD);
 	}
@@ -57,7 +47,8 @@ public class BSAsyncCacheMap<K, V> {
 
 	//DateTime이 자동생성되는거 없애줄 필요.
 	private Random random = new Random(DateTime.now().getMillis());
-	public synchronized void put(K key, V val) {
+	public void put(K key, V val) {
+		//sync
 		timeCheckerFirstPut.put(key, DateTime.now());
 		timeCheckerExpire.put(key, DateTime.now().plusSeconds(Math.abs(random.nextInt() % timeoutSec)));
 		data.put(key, val);
@@ -71,7 +62,8 @@ public class BSAsyncCacheMap<K, V> {
 		timeCheckerExpire.put(key, DateTime.now().plusSeconds(1));
 	}
 
-	public synchronized V get(K key) {
+	public V get(K key) {
+		//sync
 		if (!data.containsKey(key) || !timeCheckerExpire.containsKey(key) || DateTime.now().minusSeconds(timeoutSec).isAfter(timeCheckerExpire.get(key))) {
 //			works.add(key);
 			executor.execute(new FutureRunner(key));
@@ -79,9 +71,6 @@ public class BSAsyncCacheMap<K, V> {
 		return data.get(key);
 	}
 
-
-	private final Object syncObj1 = new Object();
-	private final Object syncObj2 = new Object();
 //	private final Queue<K> works = new ConcurrentLinkedQueue<>();
 	private class FutureRunner implements Runnable {
 		private final K key;
@@ -95,15 +84,13 @@ public class BSAsyncCacheMap<K, V> {
 //				data.put(k, cacheLoader.loadOne(k));
 			} catch (Exception e) {
 				if(allowExpiredData){
-					synchronized (syncObj1){
-						timeCheckerExpire.get(key).plusSeconds(addTimeOutSec);
-					}
+					//sync
+					timeCheckerExpire.get(key).plusSeconds(addTimeOutSec);
 				}else{
-					synchronized (syncObj2){
-						data.remove(key);
-						timeCheckerFirstPut.remove(key);
-						timeCheckerExpire.remove(key);
-					}
+					//sync
+					data.remove(key);
+					timeCheckerFirstPut.remove(key);
+					timeCheckerExpire.remove(key);
 				}
 			}
 			try {
