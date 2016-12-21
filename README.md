@@ -15,3 +15,5 @@ https://hazelcast.org/ 이거참고 또는 이용
 
 
 캐싱Async/Sync : 이전데이터를 주고 데이터를 새로 조회 / 대기시키고 조회
+https://github.com/google/guava/wiki/CachesExplained<br/>
+이런게 있어서 일시중지
