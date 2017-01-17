@@ -10,27 +10,27 @@ import java.util.List;
  * @author archmagece
  * @since 2016-11-07
  */
-public class SBCacheListTest {
+public class BSCacheListTest {
 
 	@Test
-	public void testLoadDAO(){
-		final ListDataFeed dataFeed = new ListDataFeed();
+	public void testLoad(){
+		final BSCacheListFeedingLoader dataFeed = new BSCacheListFeedingLoader();
 
-		System.out.println(dataFeed.load(0));
+		System.out.println(dataFeed.loadOne(0));
 //		System.out.println(dataFeed.loadAll());
-		System.out.println(dataFeed.load(0));
+		System.out.println(dataFeed.loadOne(0));
 //		System.out.println(dataFeed.loadAll());
-		System.out.println(dataFeed.load(0));
+		System.out.println(dataFeed.loadOne(0));
 //		System.out.println(dataFeed.loadAll());
 	}
 
 	@Test
 	public void testLoadCache(){
-		final ListDataFeed dataFeed = new ListDataFeed();
-		BSCacheList<String> cacheList = new BSCacheList<>(new BSCacheListLoader<String>(){
+		final BSCacheListFeedingLoader dataFeed = new BSCacheListFeedingLoader();
+		BSCacheList<String> cacheData = new BSCacheList<>(new BSCacheListLoader<String>(){
 			@Override
 			public String loadOne(int index) throws BSCacheLoadFailException {
-				return dataFeed.load(index);
+				return dataFeed.loadOne(index);
 			}
 			@Override
 			public List<String> loadAll() throws BSCacheLoadFailException {
@@ -38,11 +38,11 @@ public class SBCacheListTest {
 			}
 		}, LoadStrategy.ALL);
 
-		System.out.println(cacheList.get(0));
-		System.out.println(cacheList);
-		System.out.println(cacheList.get(0));
-		System.out.println(cacheList);
-		System.out.println(cacheList.get(0));
-		System.out.println(cacheList);
+		System.out.println(cacheData.get(0));
+		System.out.println(cacheData);
+		System.out.println(cacheData.get(0));
+		System.out.println(cacheData);
+		System.out.println(cacheData.get(0));
+		System.out.println(cacheData);
 	}
 }
