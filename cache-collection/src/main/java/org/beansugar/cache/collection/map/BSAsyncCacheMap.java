@@ -1,7 +1,11 @@
 package org.beansugar.cache.collection.map;
 
+import lombok.extern.slf4j.Slf4j;
+import org.beansugar.cache.core.exception.BSCacheLoadFailException;
+import org.beansugar.cache.core.util.TimeCheckerUtil;
 import org.joda.time.DateTime;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -18,12 +22,15 @@ import java.util.concurrent.Executors;
  * ConcurrentMap 참고.
  *
  */
+@Slf4j
 public class BSAsyncCacheMap<K, V> {
 
-	private Map<K, Long> timeCheckerExpire = new HashMap<>();
-	private Map<K, V> data = new HashMap<>();
+	private Random random = new Random(DateTime.now().getMillis());
+	private Map<K, Long> timeoutChecker;
+	private Map<K, V> data;
 	private final int timeoutSec;
 	private final BSCacheMapLoader<K, V> cacheLoader;
+
 	private ExecutorService executor;
 	//async
 	private final int NUMBER_OF_THREAD = 5;
@@ -33,42 +40,63 @@ public class BSAsyncCacheMap<K, V> {
 
 
 	public BSAsyncCacheMap(BSCacheMapLoader cacheLoader, int timeoutSec) {
+		timeoutChecker = Collections.synchronizedMap(new HashMap<K, Long>());
+		data = Collections.synchronizedMap(new HashMap<K, V>());
+
 		this.cacheLoader = cacheLoader;
 		this.timeoutSec = timeoutSec;
-		this.isDataDurable = false;
+
 		//async
+		this.isDataDurable = false;
 		this.executor = Executors.newFixedThreadPool(NUMBER_OF_THREAD);
 	}
 
-//	private DateTime currTime = new DateTime();
-//	private DateTime getCurrTime() {
-//		return currTime.withMillis(System.currentTimeMillis());
-//	}
-
-	//DateTime이 자동생성되는거 없애줄 필요.
-	private Random random = new Random(DateTime.now().getMillis());
-	public void put(K key, V val) {
-		//sync
-		timeCheckerFirstPut.put(key, DateTime.now());
-		timeCheckerExpire.put(key, DateTime.now().plusSeconds(Math.abs(random.nextInt() % timeoutSec)));
-		data.put(key, val);
+	public V put(K key, V val) {
+		log.trace("put data - key : {} , val : {}", key, val);
+		timeoutChecker.put(key, DateTime.now().plusSeconds(Math.abs(random.nextInt() % timeoutSec)).getMillis());
+		return data.put(key, val);
 	}
 
-	/**
-	 * 새로고침 필요한 데이터.. 1초후에 만료되도록 셋
-	 * @param key
-	 */
-	public void expireIt(K key){
-		timeCheckerExpire.put(key, DateTime.now().plusSeconds(1));
+	public void putAll(Map<? extends K, ? extends V> m) {
+		log.trace("putAll data - size : {}", m.size());
+		for (K ket : m.keySet()) {
+			timeoutChecker.put(ket, DateTime.now().plusSeconds(timeoutSec).getMillis());
+		}
+		data.putAll(m);
 	}
 
 	public V get(K key) {
 		//sync
-		if (!data.containsKey(key) || !timeCheckerExpire.containsKey(key) || DateTime.now().minusSeconds(timeoutSec).isAfter(timeCheckerExpire.get(key))) {
+		if (!data.containsKey(key) || timeoutChecker.containsKey(key) && TimeCheckerUtil.checkExpired(timeoutChecker.get(key), timeoutSec)){
 //			works.add(key);
 			executor.execute(new FutureRunner(key));
 		}
 		return data.get(key);
+	}
+
+	/**
+	 * 새로고침 필요한 데이터.. 1초후에 만료되도록 셋
+	 *
+	 * @param key
+	 */
+	public void expireOne(K key) {
+		timeoutChecker.put(key, DateTime.now().plusSeconds(1).getMillis());
+	}
+
+	public void expireAll() {
+		for (K key: timeoutChecker.keySet()) {
+			expireOne(key);
+		}
+	}
+
+	public V remove(Object key) {
+		timeoutChecker.remove(key);
+		return data.remove(key);
+	}
+
+	public void removeAll() {
+		timeoutChecker.clear();
+		data.clear();
 	}
 
 //	private final Queue<K> works = new ConcurrentLinkedQueue<>();
@@ -83,23 +111,15 @@ public class BSAsyncCacheMap<K, V> {
 				put(key, cacheLoader.loadOne(key));
 //				data.put(k, cacheLoader.loadOne(k));
 			} catch (Exception e) {
-				if(allowExpiredData){
-					//sync
-					timeCheckerExpire.get(key).plusSeconds(addTimeOutSec);
-				}else{
-					//sync
-					data.remove(key);
-					timeCheckerFirstPut.remove(key);
-					timeCheckerExpire.remove(key);
-				}
-			}
-			try {
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			} catch (ExecutionException e) {
-//				e.printStackTrace();
-			} catch (Exception e) {
-//				e.printStackTrace();
+//				if(allowExpiredData){
+//					//sync
+//					timeCheckerExpire.get(key).plusSeconds(addTimeOutSec);
+//				}else{
+//					//sync
+//					data.remove(key);
+//					timeCheckerFirstPut.remove(key);
+//					timeCheckerExpire.remove(key);
+//				}
 			}
 		}
 	}

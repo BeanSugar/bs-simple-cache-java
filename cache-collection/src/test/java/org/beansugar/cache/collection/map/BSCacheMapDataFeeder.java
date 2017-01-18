@@ -11,32 +11,29 @@ import java.util.Map;
  * @CreatedAt 2016-12-07 18
  */
 @Slf4j
-public class BSCacheMapFeedingLoader implements BSCacheMapLoader<Long,String> {
+public class BSCacheMapDataFeeder {
 	private static final Map<Long,String> sampleData = new HashMap<>();
-
 	static {
 		for (int i = 0; i < 30; i++) {
-			log.debug("add item {}", i);
+			log.trace("add item {}", i);
 			sampleData.put((long) i, "item"+i);
 		}
 	}
 
-	@Override
 	public String loadOne(Long key) throws BSCacheLoadFailException {
+		log.trace("loadOne thread sleep 500");
 		try {
-			log.debug("loadOne thread sleep 3000");
-			Thread.sleep(3000);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		return sampleData.get(key);
 	}
 
-	@Override
 	public Map<Long, String> loadAll() throws BSCacheLoadFailException {
+		log.trace("loadAll thread sleep 1000");
 		try {
-			log.debug("loadAll thread sleep 3000");
-			Thread.sleep(3000);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
