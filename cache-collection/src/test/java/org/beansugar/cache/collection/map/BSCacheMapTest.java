@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.Map;
 import java.util.Random;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -138,10 +139,11 @@ public class BSCacheMapTest {
 		int maxThreadCount = 100;
 		executor = Executors.newFixedThreadPool(maxThreadCount);
 
-		Runnable runnable = new Runnable() {
+
+		Callable<Long> runnable = new Callable<Long>() {
 			Random random = new Random();
 			@Override
-			public void run() {
+			public Long call() throws Exception {
 //				long key = Math.abs(random.nextLong() % 30);
 				long key = 3;
 				String value0 = cacheData.get(key);
@@ -150,12 +152,27 @@ public class BSCacheMapTest {
 				System.out.println(key + "  " + value0 + "  " + value1 + "  " + value0.equals(value1));
 				Assert.assertEquals(value0, value1);
 				Assert.assertTrue(value1.equals(value0+"0"));
+				return null;
 			}
 		};
+//		Runnable runnable = new Runnable() {
+//			Random random = new Random();
+//			@Override
+//			public void run() {
+////				long key = Math.abs(random.nextLong() % 30);
+//				long key = 3;
+//				String value0 = cacheData.get(key);
+//				cacheData.put(key, value0+"0");
+//				String value1 = cacheData.get(key);
+//				System.out.println(key + "  " + value0 + "  " + value1 + "  " + value0.equals(value1));
+//				Assert.assertEquals(value0, value1);
+//				Assert.assertTrue(value1.equals(value0+"0"));
+//			}
+//		};
 		for(int i=0;i<maxThreadCount;i++){
 			executor.submit(runnable);
 		}
-		executor.awaitTermination(10, TimeUnit.SECONDS);
+		executor.awaitTermination(3, TimeUnit.SECONDS);
 	}
 
 }
