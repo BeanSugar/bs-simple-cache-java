@@ -27,11 +27,11 @@
 	<distributionManagement>
 		<repository>
 			<id>beansugar-public-release</id>
-			<url>http://nexus.beansugar.org/content/repositories/public-release</url>
+			<url>http://nexus.beansugar.org/repository/maven-public-release</url>
 		</repository>
 		<snapshotRepository>
 			<id>beansugar-public-snapshot</id>
-			<url>http://nexus.beansugar.org/content/repositories/public-snapshot</url>
+			<url>http://nexus.beansugar.org/repository/maven-public-snapshot</url>
 		</snapshotRepository>
 	</distributionManagement>
 
