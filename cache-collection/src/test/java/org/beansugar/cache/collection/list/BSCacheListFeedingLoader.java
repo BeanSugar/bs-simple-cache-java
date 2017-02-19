@@ -12,25 +12,25 @@ import java.util.List;
  * @since 2016-11-07
  */
 @Slf4j
-public class ListDataFeed implements BSCacheListDAO<String> {
-	private static final List<String> dataList = new ArrayList<>();
+public class BSCacheListFeedingLoader implements BSCacheListLoader<String> {
+	private static final List<String> sampleData = new ArrayList<>();
 
 	static {
 		for (int i = 0; i < 30; i++) {
 			log.debug("add item {}", i);
-			dataList.add("" + i + i + i + i + i);
+			sampleData.add("" + i + i + i + i + i);
 		}
 	}
 
 	@Override
-	public String load(int index) throws BSCacheLoadFailException {
+	public String loadOne(int index) throws BSCacheLoadFailException {
 		try {
 			log.debug("loadOne thread sleep 3000");
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return dataList.get(index);
+		return sampleData.get(index);
 	}
 
 	@Override
@@ -41,6 +41,6 @@ public class ListDataFeed implements BSCacheListDAO<String> {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return dataList;
+		return sampleData;
 	}
 }

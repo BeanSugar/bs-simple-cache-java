@@ -89,7 +89,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- scriptonbasestar -->
+			<!-- beansugar -->
 			<dependency>
 				<groupId>org.beansugar.cache</groupId>
 				<artifactId>cache-collection</artifactId>
@@ -101,11 +101,11 @@
 				<version>${project.version}</version>
 			</dependency>
 
-			<!-- Lombok -->
+			<!-- lombok -->
 			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
-				<version>1.16.10</version>
+				<version>1.16.12</version>
 				<scope>provided</scope>
 			</dependency>
 
