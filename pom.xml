@@ -89,7 +89,7 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- beansugar -->
+			<!-- scriptonbasestar -->
 			<dependency>
 				<groupId>org.beansugar.cache</groupId>
 				<artifactId>cache-collection</artifactId>
