@@ -55,7 +55,7 @@
 //	}
 //
 //	//DateTime이 자동생성되는거 없애줄 필요.
-//	private Random random = new Random(DateTime.now().getMillis());
+//	private Random random = new Random(System.currentTimeMillis());
 //
 //	@Override
 //	public V get(final Object key) {

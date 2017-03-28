@@ -2,10 +2,12 @@ package org.beansugar.cache.collection.map;
 
 import lombok.extern.slf4j.Slf4j;
 import org.beansugar.cache.core.exception.BSCacheLoadFailException;
-import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.Callable;
@@ -38,20 +40,20 @@ public class BSCacheMapTest {
 	public void subLoadOne로딩딜레이확인() {
 		int 반복횟수 = 10;
 
-		DateTime start1 = DateTime.now();
+		long start1 = System.currentTimeMillis();
 		for (int i = 0; i < 반복횟수; i++) {
 			System.out.println(dataFeeder.loadOne(0L));
 		}
-		DateTime end1 = DateTime.now();
-		long result1 = end1.getMillis() - start1.getMillis();
+		long end1 = System.currentTimeMillis();
+		long result1 = System.currentTimeMillis() - start1;
 		System.out.println(result1);
 
-		DateTime start2 = DateTime.now();
+		long start2 = System.currentTimeMillis();
 		for (int i = 0; i < 반복횟수; i++) {
 			System.out.println(cacheData.get(0L));
 		}
-		DateTime end2 = DateTime.now();
-		long result2 = end2.getMillis() - start2.getMillis();
+		long end2 = System.currentTimeMillis();
+		long result2 = end2 - start2;
 		System.out.println(result2);
 
 		System.out.println("결과시간 비교(ms) result1 : " + result1);
@@ -64,20 +66,20 @@ public class BSCacheMapTest {
 	public void subLoadAll로딩딜레이확인() {
 		int 반복횟수 = 5;
 
-		DateTime start1 = DateTime.now();
+		long start1 = System.currentTimeMillis();
 		for (int i = 0; i < 반복횟수; i++) {
 			System.out.println(dataFeeder.loadAll());
 		}
-		DateTime end1 = DateTime.now();
-		long result1 = end1.getMillis() - start1.getMillis();
+		long end1 = System.currentTimeMillis();
+		long result1 = end1 - start1;
 		System.out.println(result1);
 
-		DateTime start2 = DateTime.now();
+		long start2 = System.currentTimeMillis();
 		for (int i = 0; i < 반복횟수; i++) {
 			System.out.println(cacheData.toString());
 		}
-		DateTime end2 = DateTime.now();
-		long result2 = end2.getMillis() - start2.getMillis();
+		long end2 = System.currentTimeMillis();
+		long result2 = end2 - start2;
 		System.out.println(result2);
 
 		System.out.println("결과시간 비교(ms) result1 : " + result1);
@@ -91,28 +93,28 @@ public class BSCacheMapTest {
 		long now;
 		long timeSpent;
 
-		now = DateTime.now().getMillis();
+		now = System.currentTimeMillis();
 		System.out.println("first move");
 		for(int i=0;i<5;i++){
 			cacheData.get((long) i);
 		}
-		timeSpent = DateTime.now().getMillis() - now;
+		timeSpent = System.currentTimeMillis() - now;
 		System.out.println("시간소요 first move : " + timeSpent);
 
-		now = DateTime.now().getMillis();
+		now = System.currentTimeMillis();
 		System.out.println("second move");
 		for(long key : cacheData.keySet()){
 			cacheData.get(key);
 		}
-		timeSpent = DateTime.now().getMillis() - now;
+		timeSpent = System.currentTimeMillis() - now;
 		System.out.println("시간소요 second move : " + timeSpent);
 
-		now = DateTime.now().getMillis();
+		now = System.currentTimeMillis();
 		System.out.println("third move");
 		for(long key : cacheData.keySet()){
 			cacheData.get(key);
 		}
-		timeSpent = DateTime.now().getMillis() - now;
+		timeSpent = System.currentTimeMillis() - now;
 		System.out.println("시간소요 third move : " + timeSpent);
 
 		System.out.println("========================");
@@ -123,12 +125,12 @@ public class BSCacheMapTest {
 			e.printStackTrace();
 		}
 
-		now = DateTime.now().getMillis();
+		now = System.currentTimeMillis();
 		System.out.println("last move");
 		for(long key : cacheData.keySet()){
 			cacheData.get(key);
 		}
-		timeSpent = DateTime.now().getMillis() - now;
+		timeSpent = System.currentTimeMillis() - now;
 		System.out.println("시간소요 last move : " + timeSpent);
 
 	}

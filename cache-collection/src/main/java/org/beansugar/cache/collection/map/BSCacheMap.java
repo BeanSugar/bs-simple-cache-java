@@ -3,7 +3,6 @@ package org.beansugar.cache.collection.map;
 import lombok.extern.slf4j.Slf4j;
 import org.beansugar.cache.core.exception.BSCacheLoadFailException;
 import org.beansugar.cache.core.util.TimeCheckerUtil;
-import org.joda.time.DateTime;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.*;
@@ -38,7 +37,7 @@ import java.util.*;
 @Slf4j
 public class BSCacheMap<K, V> {
 
-	private Random random = new Random(DateTime.now().getMillis());
+	private Random random = new Random(System.currentTimeMillis());
 	private Map<K, Long> timeoutChecker;
 	private Map<K, V> data;
 	private final int timeoutSec;
@@ -54,14 +53,14 @@ public class BSCacheMap<K, V> {
 
 	public V put(K key, V val) {
 		log.trace("put data - key : {} , value : {}", key, val);
-		timeoutChecker.put(key, DateTime.now().plusSeconds(Math.abs(random.nextInt() % timeoutSec)).getMillis());
+		timeoutChecker.put(key, System.currentTimeMillis() + 1000 * Math.abs(random.nextInt() % timeoutSec));
 		return data.put(key, val);
 	}
 
 	public void putAll(Map<? extends K, ? extends V> m) {
 		log.trace("putAll data");
 		for (K key : m.keySet()) {
-			timeoutChecker.put(key, DateTime.now().plusSeconds(timeoutSec).getMillis());
+			timeoutChecker.put(key, System.currentTimeMillis() + 1000 * timeoutSec);
 		}
 		data.putAll(m);
 	}
@@ -97,7 +96,7 @@ public class BSCacheMap<K, V> {
 
 	public void postponeOne(K key) {
 		synchronized (BSCacheMap.class) {
-			timeoutChecker.put(key, DateTime.now().plusSeconds(timeoutSec).getMillis());
+			timeoutChecker.put(key, System.currentTimeMillis() + 1000 * timeoutSec);
 		}
 	}
 
@@ -116,7 +115,7 @@ public class BSCacheMap<K, V> {
 	 */
 	public void expireOne(K key) {
 		synchronized (BSCacheMap.class) {
-			timeoutChecker.put(key, DateTime.now().plusSeconds(1).getMillis());
+			timeoutChecker.put(key, System.currentTimeMillis() + 1000 * 1);
 		}
 	}
 
