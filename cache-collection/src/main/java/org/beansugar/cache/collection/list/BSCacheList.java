@@ -2,8 +2,8 @@ package org.beansugar.cache.collection.list;
 
 import lombok.extern.slf4j.Slf4j;
 import org.beansugar.cache.collection.stratege.LoadStrategy;
-import org.joda.time.DateTime;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +22,7 @@ import java.util.concurrent.Executors;
 public class BSCacheList<E> extends ArrayList<E> {
 
 	private static final Object syncObject = new Object();
-	private DateTime updatedAt = DateTime.now();
+	private LocalTime updatedAt = LocalTime.now();
 	private final int timeoutSec = 300;
 	private ExecutorService executor = Executors.newFixedThreadPool(1);
 	private final BSCacheListLoader<E> loader;
@@ -65,7 +65,7 @@ public class BSCacheList<E> extends ArrayList<E> {
 	@Override
 	public E get(int index) {
 		log.trace("BSCacheList get - s");
-		if (updatedAt.plusSeconds(timeoutSec).isBeforeNow()) {
+		if (updatedAt.plusSeconds(timeoutSec).isBefore(LocalTime.now())) {
 			log.trace("BSCacheList get - cache time expired");
 			updatedAt.plusSeconds(timeoutSec);
 

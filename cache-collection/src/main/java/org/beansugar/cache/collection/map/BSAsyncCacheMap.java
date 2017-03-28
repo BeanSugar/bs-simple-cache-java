@@ -1,9 +1,7 @@
 package org.beansugar.cache.collection.map;
 
 import lombok.extern.slf4j.Slf4j;
-import org.beansugar.cache.core.exception.BSCacheLoadFailException;
 import org.beansugar.cache.core.util.TimeCheckerUtil;
-import org.joda.time.DateTime;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,7 +23,7 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class BSAsyncCacheMap<K, V> {
 
-	private Random random = new Random(DateTime.now().getMillis());
+	private Random random = new Random(System.currentTimeMillis());
 	private Map<K, Long> timeoutChecker;
 	private Map<K, V> data;
 	private final int timeoutSec;
@@ -53,14 +51,14 @@ public class BSAsyncCacheMap<K, V> {
 
 	public V put(K key, V val) {
 		log.trace("put data - key : {} , val : {}", key, val);
-		timeoutChecker.put(key, DateTime.now().plusSeconds(Math.abs(random.nextInt() % timeoutSec)).getMillis());
+		timeoutChecker.put(key, System.currentTimeMillis() + 1000 * Math.abs(random.nextInt() % timeoutSec));
 		return data.put(key, val);
 	}
 
 	public void putAll(Map<? extends K, ? extends V> m) {
 		log.trace("putAll data - size : {}", m.size());
-		for (K ket : m.keySet()) {
-			timeoutChecker.put(ket, DateTime.now().plusSeconds(timeoutSec).getMillis());
+		for (K key : m.keySet()) {
+			timeoutChecker.put(key, System.currentTimeMillis() + 1000 * timeoutSec);
 		}
 		data.putAll(m);
 	}
@@ -80,7 +78,7 @@ public class BSAsyncCacheMap<K, V> {
 	 * @param key
 	 */
 	public void expireOne(K key) {
-		timeoutChecker.put(key, DateTime.now().plusSeconds(1).getMillis());
+		timeoutChecker.put(key, System.currentTimeMillis() + 1000 * 1);
 	}
 
 	public void expireAll() {
