@@ -2,9 +2,8 @@ package org.scriptonbasestar.cache.collection.list;
 
 /**
  * @author archmagece
- * @with sb-simple-cache
- * @since 2016-11-06
- *
+ * @with bs-tools-java
+ * @since 2016-11-11
  */
-public class SBCacheList {
+public interface SBCacheListCatcher {
 }

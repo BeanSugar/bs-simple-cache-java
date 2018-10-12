@@ -1,18 +1,8 @@
 # sb-simple-cache-java
-ScriptonBasestar 자바 로컬캐싱 lib. 연습코드묶음에 있던거 따로 라이브러리화
 
-1
 
-caching - map list. local memory
-
-2
-
-redis
-
-3
-
-file.
-
-4
+캐싱전략 1. 데이터 호출시 일정시간체크
+캐싱전략 2. 시간주기
 
 etc..memcached .....
+캐싱Async/Sync : 이전데이터를 주고 데이터를 새로 조회 / 대기시키고 조회
