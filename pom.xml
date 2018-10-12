@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.beansugar.cache</groupId>
-	<artifactId>bs-simple-cache-java</artifactId>
+	<groupId>org.scriptonbasestar.cache</groupId>
+	<artifactId>sb-cache-java</artifactId>
 
 	<modules>
 		<module>cache-collection</module>
@@ -13,18 +13,12 @@
 		<!--<module>cache-loader-redis</module>-->
 	</modules>
 	<packaging>pom</packaging>
-	<version>bs-cache-201612-1-BUILD-SNAPSHOT</version>
+	<version>sb-cache-20181013-1-DEV</version>
 
 	<properties>
 		<java-version>1.8</java-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<org.beansugar.base-version>beansugar-base-201703-1-BUILD-SNAPSHOT</org.beansugar.base-version>
-		<!-- tool -->
-		<org.beansugar.tools-version>bs-tools-201703-1-BUILD-SNAPSHOT</org.beansugar.tools-version>
-		<org.beansugar.oauth-version>bs-oauth-201612-3-BUILD-SNAPSHOT</org.beansugar.oauth-version>
-
 
 		<!-- spring -->
 		<org.springframework.boot-version>1.5.2.RELEASE</org.springframework.boot-version>
@@ -70,13 +64,9 @@
 
 	<distributionManagement>
 		<repository>
-			<id>beansugar-public-release</id>
-			<url>http://nexus.polypia.net/repository/maven-public-release</url>
+			<id>scriptonbasestar-public-release</id>
+			<url>https://dl.bintray.com/archmagece/jvm-repo</url>
 		</repository>
-		<snapshotRepository>
-			<id>beansugar-public-snapshot</id>
-			<url>http://nexus.polypia.net/repository/maven-public-snapshot</url>
-		</snapshotRepository>
 	</distributionManagement>
 
 	<dependencies>
@@ -135,12 +125,12 @@
 		<dependencies>
 			<!-- scriptonbasestar -->
 			<dependency>
-				<groupId>org.beansugar.cache</groupId>
+				<groupId>org.scriptonbasestar.cache</groupId>
 				<artifactId>cache-collection</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.beansugar.cache</groupId>
+				<groupId>org.scriptonbasestar.cache</groupId>
 				<artifactId>cache-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
